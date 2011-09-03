@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rake", "~> 0.9.2"
   s.add_dependency "json", "~> 1.4.6"
   s.add_dependency "dalli", "~> 1.0.5"
+  s.add_dependency "sinatra", "~> 1.2"
   s.add_development_dependency "rspec", "2.6.0"
   s.add_development_dependency "guard", "0.5.1"
   s.add_development_dependency "guard-shell", "0.1.1"
