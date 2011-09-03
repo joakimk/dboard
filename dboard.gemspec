@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Joakim Kolsjö"]
   s.email       = ["joakim.kolsjo@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{}
-  s.description = %q{}
+  s.summary     = %q{Dashboard framework}
+  s.description = %q{Dashboard framework}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {spec}/*`.split("\n")
@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sinatra", "~> 1.2"
   s.add_development_dependency "rspec", "2.6.0"
   s.add_development_dependency "guard", "0.5.1"
-  s.add_development_dependency "guard-shell", "0.1.1"
+  s.add_development_dependency "guard-rspec", "0.4.3"
   s.add_development_dependency "guard-bundler", "0.1.3"
   s.add_development_dependency "rb-fsevent", "0.4.1"
 end
