@@ -53,4 +53,5 @@ Todo:
 * Include the client side dashboard script (see the [example app](https://github.com/joakimk/dboard_example) for now).
 * Provide additional tools for creating dashboards (layout css, graphical widgets, etc). Probably as another gem.
 * Tools for deployment (if it can be made generic enough), otherwise a general guide.
+* Make the example app a bit more realistic. Dev-mode tools (foreman, guard, auto-reload-sources), use the collector, layout, more sources, etc.
 * If someone wants to add it: support for pushing data to the client using web sockets.
