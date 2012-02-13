@@ -15,6 +15,7 @@ Things dboard do for you:
 * Sends the data to the dashboard web app.
 * Receives and stores the data in the dashboard web app.
 * Provides an API to get data to display on the dashboard.
+* Keeps the latest data in memcache so that all data is available when you visit the databoard, even data from slow or rarely updated sources (like external APIs).
 * Provides a javascript client that knows how to talk to the API (for now it's only included in the [example app](https://github.com/joakimk/dboard_example))
 * Only calls your javascript widgets when there is new data.
 
