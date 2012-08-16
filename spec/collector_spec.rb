@@ -9,7 +9,7 @@ describe Dboard::Collector, "register_source" do
   it "can register a source" do
     new_relic = mock
     new_relic.stub!(:update_interval).and_return(5)
-    Dboard::Collector.instance.register_source :new_relic, new_relic
+    Dboard::Collector.register_source :new_relic, new_relic
     Dboard::Collector.instance.sources.should == { :new_relic => new_relic }
   end
 
@@ -17,14 +17,14 @@ describe Dboard::Collector, "register_source" do
     new_relic = mock
     new_relic.stub!(:fetch).and_return({ :db => "100%" })
     callback = mock
-    Dboard::Collector.instance.register_after_update_callback callback
+    Dboard::Collector.register_after_update_callback callback
 
     callback.should_receive(:call)
     Dboard::Publisher.stub!(:publish)
     Dboard::Collector.instance.update_source(:new_relic, new_relic)
 
     # since it is a singleton, and this callbacks leaks into the other tests
-    Dboard::Collector.instance.register_after_update_callback(lambda {})
+    Dboard::Collector.register_after_update_callback(lambda {})
   end
 
 end
