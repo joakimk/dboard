@@ -13,6 +13,20 @@ describe Dboard::Collector, "register_source" do
     Dboard::Collector.instance.sources.should == { :new_relic => new_relic }
   end
 
+  it "can register an after update callback" do
+    new_relic = mock
+    new_relic.stub!(:fetch).and_return({ :db => "100%" })
+    callback = mock
+    Dboard::Collector.instance.register_after_update_callback callback
+
+    callback.should_receive(:call)
+    Dboard::Publisher.stub!(:publish)
+    Dboard::Collector.instance.update_source(:new_relic, new_relic)
+
+    # since it is a singleton, and this callbacks leaks into the other tests
+    Dboard::Collector.instance.register_after_update_callback(lambda {})
+  end
+
 end
 
 describe Dboard::Collector, "update_source" do

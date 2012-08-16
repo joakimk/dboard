@@ -11,12 +11,17 @@ module Dboard
       Collector.instance.register_source(key, instance)
     end
 
+    def self.register_after_update_callback(callback)
+      Collector.instance.register_after_update_callback(callback)
+    end
+
     def self.start
       instance.start
     end
 
     def initialize
       @sources = {}
+      @after_update_callback = lambda {}
     end
 
     def start
@@ -38,8 +43,12 @@ module Dboard
     end
 
     def update_source(source, instance)
-      data = instance.fetch
-      publish_data(source, data)
+      begin
+        data = instance.fetch
+        publish_data(source, data)
+      ensure
+        @after_update_callback.call
+      end
     rescue Exception => ex
       puts "Failed to update #{source}: #{ex.message}"
       puts ex.backtrace
@@ -47,6 +56,10 @@ module Dboard
 
     def register_source(key, instance)
       @sources.merge!({ key => instance })
+    end
+
+    def register_after_update_callback(callback)
+      @after_update_callback = callback
     end
 
     def publish_data(source, data)
