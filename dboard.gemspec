@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = %q{Dashboard framework}
   s.description = %q{Dashboard framework}
+  s.license     = "MIT"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {spec}/*`.split("\n")
