@@ -23,8 +23,4 @@ Gem::Specification.new do |s|
   s.add_dependency "dalli", "~> 1.0.5"
   s.add_dependency "sinatra", "~> 1.2"
   s.add_development_dependency "rspec", "2.6.0"
-  s.add_development_dependency "guard", "0.5.1"
-  s.add_development_dependency "guard-rspec", "0.4.3"
-  s.add_development_dependency "guard-bundler", "0.1.3"
-  s.add_development_dependency "rb-fsevent", "0.4.1"
 end

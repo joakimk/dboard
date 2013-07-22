@@ -28,18 +28,25 @@ module Dboard
       @sources.each do |source, instance|
         Thread.new do
           loop do
-            time = Time.now
-            puts "#{source} updating..."
-            update_source(source, instance)
-            elapsed_time = Time.now - time
-            time_until_next_update = instance.update_interval - elapsed_time
-            time_until_next_update = 0 if time_until_next_update < 0
-            puts "#{source} done in #{elapsed_time} seconds, will update again in #{time_until_next_update} seconds (interval: #{instance.update_interval})."
-            sleep time_until_next_update
+            update_in_thread
           end
         end
       end
       loop { sleep 1 }
+    end
+
+    def update_in_thread
+      time = Time.now
+      puts "#{source} updating..."
+      update_source(source, instance)
+      elapsed_time = Time.now - time
+      time_until_next_update = instance.update_interval - elapsed_time
+      time_until_next_update = 0 if time_until_next_update < 0
+      puts "#{source} done in #{elapsed_time} seconds, will update again in #{time_until_next_update} seconds (interval: #{instance.update_interval})."
+      sleep time_until_next_update
+    rescue Exception => ex
+      puts "Something failed outside the update_source method. #{ex.message}"
+      puts ex.backtrace
     end
 
     def update_source(source, instance)
