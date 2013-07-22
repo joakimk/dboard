@@ -28,14 +28,14 @@ module Dboard
       @sources.each do |source, instance|
         Thread.new do
           loop do
-            update_in_thread
+            update_in_thread(source, instance)
           end
         end
       end
       loop { sleep 1 }
     end
 
-    def update_in_thread
+    def update_in_thread(source, instance)
       time = Time.now
       puts "#{source} updating..."
       update_source(source, instance)
