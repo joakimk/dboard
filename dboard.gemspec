@@ -18,10 +18,10 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "httparty", "~> 0.7.8"
-  s.add_dependency "rake", "~> 0.9.2"
-  s.add_dependency "json", "~> 1.4.6"
-  s.add_dependency "dalli", "~> 1.0.5"
-  s.add_dependency "sinatra", "~> 1.2"
+  s.add_dependency "httparty"
+  s.add_dependency "rake"
+  s.add_dependency "json"
+  s.add_dependency "dalli"
+  s.add_dependency "sinatra"
   s.add_development_dependency "rspec", "2.6.0"
 end
