@@ -26,9 +26,9 @@ module Dboard
 
     def start
       @sources.each do |source, instance|
-        wait_a_little_bit_to_not_start_all_fetches_at_once
-
         Thread.new do
+          wait_a_little_bit_to_not_start_all_fetches_at_once
+
           loop do
             update_in_thread(source, instance)
           end
