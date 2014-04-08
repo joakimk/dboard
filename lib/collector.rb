@@ -26,6 +26,8 @@ module Dboard
 
     def start
       @sources.each do |source, instance|
+        wait_a_little_bit_to_not_start_all_fetches_at_once
+
         Thread.new do
           loop do
             update_in_thread(source, instance)
@@ -71,6 +73,10 @@ module Dboard
 
     def publish_data(source, data)
       Publisher.publish(source, data)
+    end
+
+    def wait_a_little_bit_to_not_start_all_fetches_at_once
+      sleep 10 * rand
     end
   end
 end
