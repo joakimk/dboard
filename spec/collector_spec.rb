@@ -1,7 +1,6 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
 describe Dboard::Collector, "register_source" do
-
   before do
     Dboard::Collector.instance.sources.clear
   end
@@ -26,7 +25,6 @@ describe Dboard::Collector, "register_source" do
     # since it is a singleton, and this callbacks leaks into the other tests
     Dboard::Collector.register_after_update_callback(lambda {})
   end
-
 end
 
 describe Dboard::Collector, "update_source" do
@@ -47,5 +45,4 @@ describe Dboard::Collector, "update_source" do
     Dboard::Collector.instance.should_receive(:puts).twice
     Dboard::Collector.instance.update_source(:new_relic, new_relic)
   end
-
 end
