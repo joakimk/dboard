@@ -37,20 +37,15 @@ module Dboard
       loop { sleep 1 }
     end
 
-    def update_in_thread(source, instance)
-      time = Time.now
-      puts "#{source} updating..."
-      update_source(source, instance)
-      elapsed_time = Time.now - time
-      time_until_next_update = instance.update_interval - elapsed_time
-      time_until_next_update = 0 if time_until_next_update < 0
-      puts "#{source} done in #{elapsed_time} seconds, will update again in #{time_until_next_update} seconds (interval: #{instance.update_interval})."
-      sleep time_until_next_update
-    rescue Exception => ex
-      puts "Something failed outside the update_source method. #{ex.message}"
-      puts ex.backtrace
+    def register_source(key, instance)
+      @sources.merge!({ key => instance })
     end
 
+    def register_after_update_callback(callback)
+      @after_update_callback = callback
+    end
+
+    # Public because the old tests depend on it
     def update_source(source, instance)
       begin
         data = instance.fetch
@@ -63,12 +58,20 @@ module Dboard
       puts ex.backtrace
     end
 
-    def register_source(key, instance)
-      @sources.merge!({ key => instance })
-    end
+    private
 
-    def register_after_update_callback(callback)
-      @after_update_callback = callback
+    def update_in_thread(source, instance)
+      time = Time.now
+      puts "#{source} updating..."
+      update_source(source, instance)
+      elapsed_time = Time.now - time
+      time_until_next_update = instance.update_interval - elapsed_time
+      time_until_next_update = 0 if time_until_next_update < 0
+      puts "#{source} done in #{elapsed_time} seconds, will update again in #{time_until_next_update} seconds (interval: #{instance.update_interval})."
+      sleep time_until_next_update
+    rescue Exception => ex
+      puts "Something failed outside the update_source method. #{ex.message}"
+      puts ex.backtrace
     end
 
     def publish_data(source, data)
