@@ -25,6 +25,21 @@ describe Dboard::Collector, "register_source" do
     # since it is a singleton, and this callbacks leaks into the other tests
     Dboard::Collector.register_after_update_callback(lambda {})
   end
+
+  it "can register an error callback" do
+    new_relic = mock
+    error = RuntimeError.new("error")
+    new_relic.stub!(:fetch).and_raise(error)
+    callback = mock
+    Dboard::Collector.register_error_callback callback
+
+    callback.should_receive(:call).with(error)
+    Dboard::Publisher.stub!(:publish)
+    Dboard::Collector.instance.update_source(:new_relic, new_relic)
+
+    # since it is a singleton, and this callbacks leaks into the other tests
+    Dboard::Collector.register_error_callback(lambda { |_| })
+  end
 end
 
 describe Dboard::Collector, "update_source" do

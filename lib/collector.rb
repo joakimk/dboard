@@ -15,6 +15,10 @@ module Dboard
       Collector.instance.register_after_update_callback(callback)
     end
 
+    def self.register_error_callback(callback)
+      Collector.instance.register_error_callback(callback)
+    end
+
     def self.start
       instance.start
     end
@@ -22,6 +26,7 @@ module Dboard
     def initialize
       @sources = {}
       @after_update_callback = lambda {}
+      @error_callback = lambda { |exception| }
     end
 
     def start
@@ -45,6 +50,10 @@ module Dboard
       @after_update_callback = callback
     end
 
+    def register_error_callback(callback)
+      @error_callback = callback
+    end
+
     # Public because the old tests depend on it
     def update_source(source, instance)
       begin
@@ -56,6 +65,7 @@ module Dboard
     rescue Exception => ex
       puts "Failed to update #{source}: #{ex.message}"
       puts ex.backtrace
+      @error_callback.call(ex)
     end
 
     private
